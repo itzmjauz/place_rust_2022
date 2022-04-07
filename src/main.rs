@@ -1,5 +1,5 @@
 use csscolorparser;
-use ggez::conf;
+use ggez::conf::{self, FullscreenType};
 use ggez::event::{self, EventHandler};
 use ggez::graphics::{self, Color, Drawable, Image};
 use ggez::{Context, ContextBuilder, GameResult};
@@ -8,7 +8,7 @@ mod csv;
 
 fn main() {
     let (mut ctx, event_loop) = ContextBuilder::new("r/place2022", "itzmjauz")
-        .window_mode(conf::WindowMode::default().resizable(true))
+        .window_mode(conf::WindowMode::default().resizable(true).dimensions(2000.0, 2000.0))
         .build()
         .unwrap();
 
@@ -30,7 +30,7 @@ impl Place {
             canvas: vec![255; 2000 * 2000 * 4],
             iter: csv::csv_iter("data/2022_place_canvas_history.csv"),
             frame: 0,
-            rate: 1,
+            rate: 40000,
         }
     }
 }
@@ -69,12 +69,11 @@ impl EventHandler for Place {
                 self.canvas[pixel + 3] = color.3;
 
                 timestamp = record.timestamp;
-                println!("{}, {}, {}", timestamp, x, y);
             }
         }
 
         self.frame += self.rate as i64;
-        //println!("{}", timestamp);
+        println!("{}", timestamp);
         Ok(())
     }
 
