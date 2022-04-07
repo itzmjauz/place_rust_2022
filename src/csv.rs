@@ -1,7 +1,5 @@
 use csv::ReaderBuilder;
 use serde::Deserialize;
-use std::cmp::max;
-use std::error::Error;
 use std::fs::File;
 
 #[derive(Debug, Deserialize)]
@@ -21,16 +19,4 @@ pub fn csv_iter(path: &str) -> Box<dyn Iterator<Item = Record>> {
         .map(|row| row.expect("Failed to parse row"));
 
     Box::new(rdr)
-}
-
-#[allow(dead_code)]
-pub fn print_lines(path: &str) -> Result<(), Box<dyn Error>> {
-    let mut rdr = csv::Reader::from_path(path)?;
-
-    for result in rdr.deserialize() {
-        let record: Record = result?;
-        println!("{:?}", record);
-    }
-
-    Ok(())
 }
