@@ -5,7 +5,7 @@ use std::fs::File;
 #[derive(Debug, Deserialize)]
 pub struct Record {
     pub timestamp: String,
-    user_id: String,
+    _user_id: String,
     pub pixel_color: String,
     pub coordinate: String,
 }

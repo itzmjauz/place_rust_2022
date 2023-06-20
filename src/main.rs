@@ -49,7 +49,7 @@ impl EventHandler for Place {
                     .pixel_color
                     .parse::<csscolorparser::Color>()
                     .unwrap()
-                    .rgba_u8();
+                    .to_rgba8();
                 let x = record
                     .coordinate
                     .split(',')
@@ -66,10 +66,10 @@ impl EventHandler for Place {
                     .unwrap();
                 let pixel = (y * 2000 + x) * 4;
 
-                self.canvas[pixel] = color.0;
-                self.canvas[pixel + 1] = color.1;
-                self.canvas[pixel + 2] = color.2;
-                self.canvas[pixel + 3] = color.3;
+                self.canvas[pixel] = color[0];
+                self.canvas[pixel + 1] = color[1];
+                self.canvas[pixel + 2] = color[2];
+                self.canvas[pixel + 3] = color[3];
 
                 timestamp = record.timestamp;
             }
